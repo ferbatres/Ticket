@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width"/>
+    </h:head>
+    <h:body>
+        <f:view>
+            <h:form>
+                <h1><h:outputText value="List"/></h1>
+                <p:dataTable value="#{usersMBean.list}" var="item">
+                    <p:column headerText="IdUser">
+                        <h:outputText value="#{item.idUser}"/>
+                    </p:column>
+                    <p:column headerText="Name">
+                        <h:outputText value="#{item.name}"/>
+                    </p:column>
+                    <p:column headerText="LastName">
+                        <h:outputText value="#{item.lastName}"/>
+                    </p:column>
+                    <p:column headerText="Alias">
+                        <h:outputText value="#{item.alias}"/>
+                    </p:column>
+                    <p:column headerText="RowVersion">
+                        <h:outputText value="#{item.rowVersion}"/>
+                    </p:column>
+                    <p:column headerText="IdAccount">
+                        <h:outputText value="#{item.idAccount.name}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </f:view>
+    </h:body>
+</html>
