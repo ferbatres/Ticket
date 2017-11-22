@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Account.findByIdAccount", query = "SELECT a FROM Account a WHERE a.idAccount = :idAccount"),
     @NamedQuery(name = "Account.findByName", query = "SELECT a FROM Account a WHERE a.name = :name")})
 public class Account implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -49,8 +50,6 @@ public class Account implements Serializable {
     @Lob
     @Column(name = "RowVersion")
     private byte[] rowVersion;
-    @OneToMany(mappedBy = "idAccount")
-    private List<Users> usersList;
     @JoinColumn(name = "IdSite", referencedColumnName = "IdSite")
     @ManyToOne
     private Site idSite;
@@ -91,15 +90,6 @@ public class Account implements Serializable {
         this.rowVersion = rowVersion;
     }
 
-    @XmlTransient
-    public List<Users> getUsersList() {
-        return usersList;
-    }
-
-    public void setUsersList(List<Users> usersList) {
-        this.usersList = usersList;
-    }
-
     public Site getIdSite() {
         return idSite;
     }
@@ -132,5 +122,5 @@ public class Account implements Serializable {
     public String toString() {
         return "com.iticket.model.Account[ idAccount=" + idAccount + " ]";
     }
-    
+
 }

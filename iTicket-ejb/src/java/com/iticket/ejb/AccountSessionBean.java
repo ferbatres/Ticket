@@ -45,7 +45,7 @@ public class AccountSessionBean {
     //Get list
     public List<Account> findAll() {
 
-        TypedQuery<Account> query = em.createNamedQuery("findAll", Account.class);
+        TypedQuery<Account> query = em.createNamedQuery("Account.findAll", Account.class);
         return query.getResultList();
     }
 

@@ -26,12 +26,21 @@ public class UsersSessionBean {
     private EntityManager em;
 
     public void persist(Users users) {
-        em.persist(users);
+        try {
+            em.persist(users);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     //Update an existing Department
     public void update(Users users) throws Exception {
-        em.merge(users);
+        try {
+            em.merge(users);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //find by id
@@ -51,13 +60,13 @@ public class UsersSessionBean {
     }
 
     //find record
-    public Users get(String key) {
+    public Users get(Integer key) {
         return em.find(Users.class, key);
     }
 
     //delete record
     public void delete(Users users) {
-        em.remove(get(users.getIdUser().toString()));
+        em.remove(get(users.getIdUser()));
     }
 
 }

@@ -6,22 +6,19 @@
 package com.iticket.model;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -37,10 +34,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Users.findByLastName", query = "SELECT u FROM Users u WHERE u.lastName = :lastName"),
     @NamedQuery(name = "Users.findByAlias", query = "SELECT u FROM Users u WHERE u.alias = :alias")})
 public class Users implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IdUser")
     private Integer idUser;
     @Size(max = 200)
@@ -52,20 +50,8 @@ public class Users implements Serializable {
     @Size(max = 25)
     @Column(name = "Alias")
     private String alias;
-    @Basic(optional = false)
-    @NotNull
-    @Lob
-    @Column(name = "RowVersion")
-    private byte[] rowVersion;
-    @OneToMany(mappedBy = "idUser")
-    private List<TicketUsers> ticketUsersList;
-    @JoinColumn(name = "IdAccount", referencedColumnName = "IdAccount")
-    @ManyToOne
-    private Account idAccount;
-    @OneToMany(mappedBy = "idUser")
-    private List<Ticket> ticketList;
-    @OneToMany(mappedBy = "idUser")
-    private List<TicketDetail> ticketDetailList;
+    @Column(name = "IdAccount")
+    private Integer idAccount;
 
     public Users() {
     }
@@ -76,7 +62,6 @@ public class Users implements Serializable {
 
     public Users(Integer idUser, byte[] rowVersion) {
         this.idUser = idUser;
-        this.rowVersion = rowVersion;
     }
 
     public Integer getIdUser() {
@@ -111,47 +96,12 @@ public class Users implements Serializable {
         this.alias = alias;
     }
 
-    public byte[] getRowVersion() {
-        return rowVersion;
-    }
-
-    public void setRowVersion(byte[] rowVersion) {
-        this.rowVersion = rowVersion;
-    }
-
-    @XmlTransient
-    public List<TicketUsers> getTicketUsersList() {
-        return ticketUsersList;
-    }
-
-    public void setTicketUsersList(List<TicketUsers> ticketUsersList) {
-        this.ticketUsersList = ticketUsersList;
-    }
-
-    public Account getIdAccount() {
+    public Integer getIdAccount() {
         return idAccount;
     }
 
-    public void setIdAccount(Account idAccount) {
+    public void setIdAccount(Integer idAccount) {
         this.idAccount = idAccount;
-    }
-
-    @XmlTransient
-    public List<Ticket> getTicketList() {
-        return ticketList;
-    }
-
-    public void setTicketList(List<Ticket> ticketList) {
-        this.ticketList = ticketList;
-    }
-
-    @XmlTransient
-    public List<TicketDetail> getTicketDetailList() {
-        return ticketDetailList;
-    }
-
-    public void setTicketDetailList(List<TicketDetail> ticketDetailList) {
-        this.ticketDetailList = ticketDetailList;
     }
 
     @Override
@@ -178,5 +128,5 @@ public class Users implements Serializable {
     public String toString() {
         return "com.iticket.model.Users[ idUser=" + idUser + " ]";
     }
-    
+
 }
