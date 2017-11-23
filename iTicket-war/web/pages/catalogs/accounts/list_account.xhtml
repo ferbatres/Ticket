@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <head>
+        <title>List Account</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <ui:composition template="./../../templates/defaultAdmin.xhtml">
+
+            <ui:define name="top">
+                <h1><h:outputText value="List of Account"/></h1>
+            </ui:define>
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form id="accountList">
+                        <p:growl id="msgs" showDetail="true"/>
+                        <h:commandButton class="btn btn-info" value="New Account" action="#{accountMBean.showNew()}"/>
+                        <hr></hr>
+                        <p:dataTable value="#{accountMBean.list}" var="item" editable="true" editMode="cell" rowKey="#{item.idAccount}">
+
+                            <p:ajax event="cellEdit" listener="#{accountMBean.onCellEdit}" update=":accountList:msgs"/>
+
+                            <p:column headerText="IdAccount">
+                                <h:outputText value="#{item.idAccount}"/>
+                            </p:column>
+                            <p:column headerText="Name">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText id="nameOutput" value="#{item.name}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="name" value="#{item.name}"/>                                      
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="IdSite">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{item.idSite}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="IdSite" value="#{item.idSite}"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column >
+                                <div class="btn btn-group">
+                                    <h:commandButton class="btn btn-danger" value="Delete" action="#{accountMBean.delete(item)}"/>
+                                </div>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+
+
+
+
+
+
+
+    </body>
+</html>

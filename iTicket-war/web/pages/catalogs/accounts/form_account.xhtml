@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="./../../templates/defaultAdmin.xhtml">
+
+
+
+            <ui:define name="top">
+                <h1><h:outputText value="Account"/></h1>
+            </ui:define>
+
+            <ui:define name="content">
+
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Create/Edit"/></h1>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Name:" for="name" />
+                            <h:inputText id="name" value="#{accountMBean.detail.name}" title="Name" />
+                            <h:outputLabel value="IdSite" for="idSite" />
+                            <h:selectOneMenu id="idSite" value="#{accountMBean.detail.idSite}">
+                                <f:selectItems value="#{siteMBean.list}" var="c" itemLabel="#{c.name}" itemValue="#{c.idSite}"/>
+                            </h:selectOneMenu>
+
+                            <h:commandButton class="btn btn-success" value="Save" action="#{accountMBean.save}"/>
+                            <h:commandButton class="btn btn-danger" value="Cancel" action="#{accountMBean.showList()}"/>
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

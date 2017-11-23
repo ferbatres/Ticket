@@ -8,73 +8,112 @@ package com.iticket.mbean;
 import com.iticket.ejb.AccountSessionBean;
 import com.iticket.model.Account;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.event.CellEditEvent;
+
 
 /**
  *
  * @author Irvin.Sanchez
  */
-@ManagedBean
+@ManagedBean(name = "accountMBean")
 @RequestScoped
 public class AccountMBean {
-    
+
+    private static final long SerialVersionUIDAdder = 1l;
+
     @EJB
     private AccountSessionBean accountSessionBean;
-    private Account account;
-    
+    private Account account = new Account();
+    private List<Account> accountList;
+
     public AccountMBean() {
     }
-    
+
+    @PostConstruct
+    public void init() {
+        accountList = accountSessionBean.findAll();
+    }
+
     public List<Account> getList() {
-        return accountSessionBean.findAll();
+        return accountList;
     }
-    
-    public String showNew(){
+
+    public String showNew() {
         this.account = new Account();
-        return "form";
+        return "form_account";
     }
-    
-    public Account getDetail(){
+
+    public Account getDetail() {
         return account;
     }
-    
-    public String list(){
-        return "list";
+
+    public String showList() {
+        return "list_account.xhtml";
+    }
+
+    public String showUpdate(Account account) {
+        this.account = account;
+        return "form_account";
     }
     
-    public String save(Account account){
-        try{
-            if(this.account.getIdAccount() != null){
+     public void onCellEdit(CellEditEvent event) {
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+        try {
+            accountSessionBean.update(accountList.get(event.getRowIndex()));
+            if (newValue != null && !newValue.equals(oldValue)) {
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public String save() {
+        try {
+            if (this.account.getIdAccount() != null) {
                 accountSessionBean.update(this.account);
-            }else{
+            } else {
                 accountSessionBean.persist(this.account);
             }
-        }
-        catch (Exception e){
+            return "list_account";
+        } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        this.account = null;
-        return "list";
     }
-    
-    public String delete(Account account){
-        try{
+
+    public String delete(Account account) {
+        try {
             accountSessionBean.delete(account);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return "list";
+        return "list_account.xhtml";
     }
-    
-    public Account getAccount(){
+
+    public Account getAccount() {
         return account;
     }
-    
-    public void setAccount(Account account){
+
+    public void setAccount(Account account) {
         this.account = account;
     }
-    
+
+    public List<Account> getAccountList() {
+        return accountList;
+    }
+
+    public void setAccountList(List<Account> accountList) {
+        this.accountList = accountList;
+    }
+
 }

@@ -36,8 +36,8 @@ public class SiteSessionBean {
     //find by id
     public Site findById(String siteId) {
         //Departments dep = new Departments();
-        Query query = em.createNamedQuery("Users.findByIdUser", Site.class);
-        query.setParameter("IdUser", siteId);
+        Query query = em.createNamedQuery("Site.findByIdSite", Site.class);
+        query.setParameter("idSite", siteId);
         //dep = (Departments)query.getSingleResult();
         return (Site) query.getSingleResult();
     }
@@ -45,7 +45,7 @@ public class SiteSessionBean {
     //Get list
     public List<Site> findAll() {
 
-        TypedQuery<Site> query = em.createNamedQuery("findAll", Site.class);
+        TypedQuery<Site> query = em.createNamedQuery("Site.findAll", Site.class);
         return query.getResultList();
     }
 

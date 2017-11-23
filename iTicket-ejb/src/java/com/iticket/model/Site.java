@@ -6,20 +6,16 @@
 package com.iticket.model;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -46,13 +42,7 @@ public class Site implements Serializable {
     @Size(max = 500)
     @Column(name = "Direction")
     private String direction;
-    @Basic(optional = false)
-    @NotNull
-    @Lob
-    @Column(name = "RowVersion")
-    private byte[] rowVersion;
-    @OneToMany(mappedBy = "idSite")
-    private List<Account> accountList;
+
 
     public Site() {
     }
@@ -63,7 +53,6 @@ public class Site implements Serializable {
 
     public Site(Integer idSite, byte[] rowVersion) {
         this.idSite = idSite;
-        this.rowVersion = rowVersion;
     }
 
     public Integer getIdSite() {
@@ -90,22 +79,6 @@ public class Site implements Serializable {
         this.direction = direction;
     }
 
-    public byte[] getRowVersion() {
-        return rowVersion;
-    }
-
-    public void setRowVersion(byte[] rowVersion) {
-        this.rowVersion = rowVersion;
-    }
-
-    @XmlTransient
-    public List<Account> getAccountList() {
-        return accountList;
-    }
-
-    public void setAccountList(List<Account> accountList) {
-        this.accountList = accountList;
-    }
 
     @Override
     public int hashCode() {
