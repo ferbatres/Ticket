@@ -21,23 +21,33 @@ import javax.persistence.TypedQuery;
 @Stateless
 @LocalBean
 public class AccountSessionBean {
+
     @PersistenceContext(unitName = "iTicket-ejbPU")
     private EntityManager em;
 
     public void persist(Account account) {
-        em.persist(account);
+        try {
+            em.persist(account);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    
-        //Update an existing Department
+
+    //Update an existing Department
     public void update(Account account) throws Exception {
-        em.merge(account);
+        try {
+            em.merge(account);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //find by id
+
     public Account findById(String accountId) {
         //Departments dep = new Departments();
-        Query query = em.createNamedQuery("Users.findByIdUser", Account.class);
-        query.setParameter("IdUser", accountId);
+        Query query = em.createNamedQuery("Account.findByIdAccount", Account.class);
+        query.setParameter("idAccount", accountId);
         //dep = (Departments)query.getSingleResult();
         return (Account) query.getSingleResult();
     }
@@ -50,13 +60,13 @@ public class AccountSessionBean {
     }
 
     //find record
-    public Account get(String key) {
+    public Account get(Integer key) {
         return em.find(Account.class, key);
     }
 
     //delete record
     public void delete(Account account) {
-        em.remove(get(account.getIdAccount().toString()));
+        em.remove(get(account.getIdAccount()));
     }
-    
+
 }
