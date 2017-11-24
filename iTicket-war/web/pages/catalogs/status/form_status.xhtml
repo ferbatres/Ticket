@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../templates/defaultAdmin.xhtml">
+
+
+
+            <ui:define name="top">
+                <h1><h:outputText value="Status"/></h1>
+            </ui:define>
+
+            <ui:define name="content">
+                <f:view>
+                     <h:form>
+                        <h1><h:outputText value="Create/Edit"/></h1>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Name:" for="name" />
+                            <h:inputText id="name" value="#{statusMBean.detail.name}" title="Name" />
+                            <h:outputLabel value="Description:" for="description" />
+                            <h:inputText id="description" value="#{statusMBean.detail.description}" title="Description" />
+                            <h:outputLabel value="Status:" for="status" />
+                            <h:inputText id="status" value="#{statusMBean.detail.status}" title="Status" />
+                            
+                            <h:commandButton class="btn btn-success" value="Save" action="#{statusMBean.save}"/>
+                            <h:commandButton class="btn btn-danger" value="Cancel" action="#{statusMBean.showNew()}"/>
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

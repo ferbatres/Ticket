@@ -1182,7 +1182,7 @@ exists or setup the property manually. For example like this:
     <target depends="init" name="deps-clean" unless="no.deps"/>
     <target depends="init" name="-do-clean">
         <delete dir="${build.dir}"/>
-        <delete dir="${dist.dir}"/>
+       
     </target>
     <target name="-post-clean">
         <!-- Empty placeholder for easier customization. -->

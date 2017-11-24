@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../templates/defaultAdmin.xhtml">
+
+            <ui:define name="top">
+                <h1><h:outputText value="List of Users"/></h1>
+            </ui:define>
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form id="statusList">
+                        <p:growl id="msgs" showDetail="true"/>
+                        <h:commandButton class="btn btn-info" value="New Status" action="#{statusMBean.showNew()}"/>
+                        <hr></hr>
+                        <p:dataTable value="#{statusMBean.statusList}" var="item" editable="true" editMode="cell" rowKey="#{item.idStatus}">
+
+                            <p:ajax event="cellEdit" listener="#{statusMBean.onCellEdit}" update=":statusList:msgs"/>
+
+                            <p:column headerText="IdStatus">
+                                <h:outputText value="#{item.idStatus}"/>
+                            </p:column>
+                            <p:column headerText="Name">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText id="nameOutput" value="#{item.name}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="name" value="#{item.name}"/>                                      
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Description">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{item.description}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="description" value="#{item.description}"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Status">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{item.status}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="status" value="#{item.status}"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            
+                            <p:column >
+                                <div class="btn btn-group">
+                                    <h:commandButton class="btn btn-danger" value="Delete" action="#{statusMBean.delete(item)}"/>
+                                </div>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

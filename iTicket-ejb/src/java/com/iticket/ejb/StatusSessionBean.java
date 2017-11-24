@@ -21,14 +21,15 @@ import javax.persistence.TypedQuery;
 @Stateless
 @LocalBean
 public class StatusSessionBean {
+
     @PersistenceContext(unitName = "iTicket-ejbPU")
     private EntityManager em;
 
     public void persist(Status status) {
         em.persist(status);
     }
-    
-        //Update an existing Department
+
+    //Update an existing Department
     public void update(Status status) throws Exception {
         em.merge(status);
     }
@@ -36,7 +37,7 @@ public class StatusSessionBean {
     //find by id
     public Status findById(String statusId) {
         //Departments dep = new Departments();
-        Query query = em.createNamedQuery("Users.findByIdUser", Status.class);
+        Query query = em.createNamedQuery("Status.findByIdStatus", Status.class);
         query.setParameter("IdUser", statusId);
         //dep = (Departments)query.getSingleResult();
         return (Status) query.getSingleResult();
@@ -45,18 +46,25 @@ public class StatusSessionBean {
     //Get list
     public List<Status> findAll() {
 
-        TypedQuery<Status> query = em.createNamedQuery("findAll", Status.class);
-        return query.getResultList();
+        try {
+            TypedQuery<Status> query = em.createNamedQuery("Status.findAll", Status.class);
+            return query.getResultList();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     //find record
-    public Status get(String key) {
+    public Status get(Integer key) {
         return em.find(Status.class, key);
     }
 
     //delete record
     public void delete(Status status) {
-        em.remove(get(status.getIdStatus().toString()));
+        em.remove(get(status.getIdStatus()));
     }
-    
+
 }

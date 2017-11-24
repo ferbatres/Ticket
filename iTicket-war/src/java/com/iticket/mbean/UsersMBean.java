@@ -39,7 +39,7 @@ public class UsersMBean implements Serializable {
     @PostConstruct
     public void init() {
         userList = usersSessionBean.findAll();
-    }
+    }//
 
     //Lista de Regiones
     public List<Users> getList() {
